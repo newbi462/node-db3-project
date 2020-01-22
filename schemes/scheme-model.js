@@ -4,6 +4,7 @@ module.exports = {
   find,
   findById,
   findSteps,
+  add,
 }
 
 function find() {
@@ -25,19 +26,9 @@ function findSteps(idPassed) {
     .orderBy('step_number', 'asc')
 }
 
-/*
-
-return db("posts as p")
-    .join("users as u", "p.user_id", "u.id")
-    .where("p.id", id)
-    .select("p.id as postId", "p.contents", "u.username as postedBy")
-    .first();
-
-
-{ id: 17,
-scheme_name: 'Find the Holy Grail',
-
-step_number: 1,
-
-instructions: 'quest'}
-*/
+function add(schemeData) {
+  return db("schemes").insert(schemeData)
+    .then(([id]) => {
+        return findById(id);
+    });
+}
